@@ -8,6 +8,17 @@ app.use(function middleware(req, res, next){
     next();
 });
 
+const middleware = (req, res, next) => {
+    req.time = new Date().toString();
+    next();
+  };
+  
+  app.get("/now", middleware, (req, res) => {
+    res.send({
+      time: req.time
+    });
+  });
+
 app.get('/', (req, res) => {
     res.sendFile(__dirname+'/views/index.html')
 })
@@ -19,6 +30,7 @@ app.get('/json', (req, res) => {
         res.json({"message": "Hello json"})
     }
 })
+
 
 console.log("Hello World")
 
